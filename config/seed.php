@@ -8,49 +8,58 @@ require_once("./config/db.php");
 // INSERTAR USUARIOS
 $usuarios = [
     [
-        "cedula" => "0102030405",
-        "alias" => "sysadmin",
-        "nombres" => "Juan",
-        "apellidos" => "Paredes",
-        "correo" => "sysadmin@demo.com",
-        "clave" => password_hash("admin123", PASSWORD_DEFAULT),
-        "rol" => "sysadmin"
-    ],
-    [
-        "cedula" => "1112223334",
-        "alias" => "bodega_pve",
-        "nombres" => "Carlos",
-        "apellidos" => "González",
-        "correo" => "carlos@demo.com",
-        "clave" => password_hash("clave123", PASSWORD_DEFAULT),
+        "cedula" => "1111111111",
+        "alias" => "juparedes",
+        "nombres" => "Juan Esteban",
+        "apellidos" => "Paredes Calle",
+        "correo" => "juanpaca@demo.com",
+        "clave" => password_hash("juanpacalle", PASSWORD_DEFAULT),
         "rol" => "admin_bodega"
     ],
     [
-        "cedula" => "2223334445",
-        "alias" => "empleado1",
-        "nombres" => "Ana",
-        "apellidos" => "Mendoza",
-        "correo" => "ana@demo.com",
+        "cedula" => "2222222222",
+        "alias" => "cargonza",
+        "nombres" => "Carlos Gonzalo",
+        "apellidos" => "González Fares",
+        "correo" => "carlosgonza@demo.com",
+        "clave" => password_hash("cargonzalez", PASSWORD_DEFAULT),
+        "rol" => "admin_bodega"
+    ],
+    [
+        "cedula" => "3333333333",
+        "alias" => "anaguilar",
+        "nombres" => "Ana Cristina",
+        "apellidos" => "Aguilar Gonzalez",
+        "correo" => "anaguilar@demo.com",
+        "clave" => password_hash("aguilar_ana", PASSWORD_DEFAULT),
+        "rol" => "admin_bodega"
+    ],
+    [
+        "cedula" => "4444444444",
+        "alias" => "luisbenitez",
+        "nombres" => "Luis Alfredo",
+        "apellidos" => "Benitez Salazar",
+        "correo" => "luisbeni@demo.com",
         "clave" => password_hash("empleado123", PASSWORD_DEFAULT),
         "rol" => "empleado"
     ],
     [
-        "cedula" => "3334445556",
-        "alias" => "empleado2",
-        "nombres" => "Luis",
-        "apellidos" => "Salazar",
-        "correo" => "luis@demo.com",
-        "clave" => password_hash("empleado123", PASSWORD_DEFAULT),
-        "rol" => "empleado"
-    ],
-    [
-        "cedula" => "4445556667",
-        "alias" => "bodega_zrm",
-        "nombres" => "María",
-        "apellidos" => "Jaramillo",
-        "correo" => "maria@demo.com",
+        "cedula" => "5555555555",
+        "alias" => "mariacris",
+        "nombres" => "María Cristina",
+        "apellidos" => "Jaramillo Carrión",
+        "correo" => "mariajaram@demo.com",
         "clave" => password_hash("bodega123", PASSWORD_DEFAULT),
-        "rol" => "admin_bodega"
+        "rol" => "empleado"
+    ],
+    [
+        "cedula" => "6666666666",
+        "alias" => "renatomino",
+        "nombres" => "José Renato",
+        "apellidos" => "Miño Celi",
+        "correo" => "josemino@demo.com",
+        "clave" => password_hash("josemino123", PASSWORD_DEFAULT),
+        "rol" => "empleado"
     ]
 ];
 
@@ -71,13 +80,13 @@ foreach ($usuarios as $u) {
     ]);
 }
 
-echo "Usuarios insertados ✔<br>";
+echo "Usuarios insertados";
 
 // INSERTAR BODEGAS
 $bodegas = [
-    ["BOD-PVE", "Portovelo", "Av. Loja y Sucre"],
-    ["BOD-ZRM", "Zaruma", "Av. 9 de Octubre"],
-    ["BOD-PNS", "Piñas", "Av. Carlos Lozada"]
+    ["BODPOL01", "Portovelo", "Calle Gonzalo Díaz"],
+    ["BODZAR01", "Zaruma", "Calle Reinaldo Espinoza"],
+    ["BODPIN01", "Piñas", "Av. Francisco Carrión"]
 ];
 
 $stmt = $pdo->prepare("
@@ -89,14 +98,14 @@ foreach ($bodegas as $b) {
     $stmt->execute([$b[0], $b[1], $b[2]]);
 }
 
-echo "Bodegas insertadas ✔<br>";
+echo "Bodegas insertadas";
 
 // INSERTAR PROVEEDORES
 $proveedores = [
-    ["0999999999001", "Proveedor Machala S.A.", "0999999999", "Machala"],
-    ["0888888888001", "Distribuidora Guayaquil", "0888888888", "Guayaquil"],
-    ["0777777777001", "Ferretería Cuenca", "0777777777", "Cuenca"],
-    ["0666666666001", "Proveedor Quito", "0666666666", "Quito"]
+    ["0101010101010", "Proveedor Machala", "0111111111111", "Machala"],
+    ["0202020202020", "Distribuidora Guayaquil", "0222222222222", "Guayaquil"],
+    ["0303030303030", "Ferretería Cuenca", "0333333333333", "Cuenca"],
+    ["0404040404040", "Proveedor Quito", "0444444444444", "Quito"]
 ];
 
 $stmt = $pdo->prepare("
@@ -108,19 +117,7 @@ foreach ($proveedores as $p) {
     $stmt->execute([$p[0], $p[1], $p[2], $p[3]]);
 }
 
-echo "Proveedores insertados ✔<br>";
-
-
-// ================================
-// RELACIONAR USUARIOS CON BODEGAS
-// ================================
-/*
-Vamos a suponer:
-- sysadmin NO necesita bodega
-- bodega_pve → Portovelo
-- bodega_zrm → Zaruma
-- empleados → Portovelo
-*/
+echo "Proveedores insertados";
 
 $relaciones = [
     [2, 1], // usuario bodega_pve con bodega Portovelo
