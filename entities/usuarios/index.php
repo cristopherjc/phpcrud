@@ -14,8 +14,13 @@ if ($_SESSION['usuario_rol'] !== 'sysadmin') {
     exit;
 }
 
-// Obtener todos los usuarios
-$stmt = $pdo->query("SELECT * FROM usuarios ORDER BY id DESC");
+// Obtener todos los usuarios con su bodega
+$stmt = $pdo->query("
+    SELECT u.*, b.ciudad AS bodega_ciudad, b.cod_bodega
+    FROM usuarios u
+    LEFT JOIN bodegas b ON u.bodega_id = b.id
+    ORDER BY u.id DESC
+");
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -40,6 +45,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <th>Nombre</th>
         <th>Correo</th>
         <th>Rol</th>
+        <th>Bodega</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -47,17 +53,17 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($usuarios as $u): ?>
         <tr>
             <td><?= $u['id'] ?></td>
-            <td><?= $u['cedula'] ?></td>
-            <td><?= $u['alias'] ?></td>
-            <td><?= $u['nombres'] . " " . $u['apellidos'] ?></td>
-            <td><?= $u['correo'] ?></td>
-            <td><?= $u['rol'] ?></td>
+            <td><?= htmlspecialchars($u['cedula']) ?></td>
+            <td><?= htmlspecialchars($u['alias']) ?></td>
+            <td><?= htmlspecialchars($u['nombres'] . " " . $u['apellidos']) ?></td>
+            <td><?= htmlspecialchars($u['correo']) ?></td>
+            <td><?= htmlspecialchars($u['rol']) ?></td>
+            <td>
+                <?= $u['bodega_ciudad'] ? htmlspecialchars($u['bodega_ciudad'] . " (" . $u['cod_bodega'] . ")") : '-' ?>
+            </td>
             <td>
                 <a href="editar.php?id=<?= $u['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-
-                <a href="asignar_bodegas.php?id=<?= $u['id'] ?>" 
-                   class="btn btn-info btn-sm">Bodegas</a>
-
+                <a href="asignar_bodegas.php?id=<?= $u['id'] ?>" class="btn btn-info btn-sm">Bodegas</a>
                 <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?= $u['id'] ?>)">Eliminar</button>
             </td>
         </tr>
