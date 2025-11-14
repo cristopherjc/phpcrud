@@ -10,7 +10,8 @@ CREATE TABLE usuarios (
     rol ENUM('sysadmin', 'admin_bodega', 'empleado')
     	NOT NULL DEFAULT 'empleado',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (bodega_id) REFERENCES bodegas(id) ON DELETE SET NULL
 ) ENGINE=INNODB;
 
 CREATE TABLE bodegas (
@@ -20,14 +21,6 @@ CREATE TABLE bodegas (
     direccion varchar(100) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-) ENGINE=INNODB;
-
-CREATE TABLE usuarios_bodegas (
-	id_usuario int NOT NULL,
-    id_bodega int NOT NULL,
-    PRIMARY KEY (id_usuario, id_bodega),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_bodega) REFERENCES bodegas(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 CREATE TABLE proveedores (

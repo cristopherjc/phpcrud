@@ -7,7 +7,8 @@ error_reporting(E_ALL);
 require_once "../../auth/auth.php";
 require_once "../../config/db.php";
 
-if ($_SESSION['usuario_rol'] !== 'sysadmin') {
+if ($_SESSION['usuario_rol'] != 'sysadmin') {
+    $_SESSION['error'] = "No tienes permisos para esta acción.";
     header("Location: index.php");
     exit;
 }
@@ -19,12 +20,19 @@ $apellidos = $_POST['apellidos'];
 $correo = $_POST['correo'];
 $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
 $rol = $_POST['rol'];
+$bodega_id = $_POST['bodega_id'] ?: null;
 
-$stmt = $pdo->prepare("INSERT INTO usuarios 
-(cedula, alias, nombres, apellidos, correo, clave, rol)
-VALUES (?, ?, ?, ?, ?, ?, ?)");
+// si es rol sysadmin va con bodega null
+if ($rol === "sysadmin") {
+    $bodega_id = null;
+}
 
-$stmt->execute([$cedula, $alias, $nombres, $apellidos, $correo, $clave, $rol]);
+$stmt = $pdo->prepare("
+    INSERT INTO usuarios (cedula, alias, nombres, apellidos, correo, clave, rol, bodega_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+");
+$stmt->execute([$cedula, $alias, $nombres, $apellidos, $correo, $clave, $rol, $bodega_id]);
 
 header("Location: index.php");
 exit;
+?>

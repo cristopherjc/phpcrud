@@ -58,14 +58,27 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <a href="asignar_bodegas.php?id=<?= $u['id'] ?>" 
                    class="btn btn-info btn-sm">Bodegas</a>
 
-                <a href="eliminar.php?id=<?= $u['id'] ?>"
-                   onclick="return confirm('¿Eliminar usuario?')"
-                   class="btn btn-danger btn-sm">Eliminar</a>
+                <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?= $u['id'] ?>)">Eliminar</button>
             </td>
         </tr>
     <?php endforeach; ?>
     </tbody>
 </table>
 
+<script>
+function confirmarEliminar(id) {
+  Swal.fire({
+    title: '¿Seguro que deseas eliminar este usuario?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = 'eliminar.php?id=' + id;
+    }
+  });
+}
+</script>
 </body>
 </html>
