@@ -1,0 +1,25 @@
+<?php
+// DEBUG
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once "../../auth/auth.php";
+require_once "../../config/db.php";
+
+if ($_SESSION['usuario_rol'] != 'sysadmin') {
+    $_SESSION['error'] = "No tienes permisos para esta acción.";
+    header("Location: ./index.php");
+    exit;
+}
+
+$id = $_POST['id'];
+$nombre = $_POST['nombre'];
+$descripcion = $_POST['descripcion'];
+
+$stmt = $pdo->prepare("UPDATE categorias SET nombre = ?, descripcion = ? WHERE id = ?");
+$stmt->execute([$nombre, $descripcion, $id]);
+
+header("Location: index.php");
+exit;
+?>
