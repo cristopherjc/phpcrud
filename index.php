@@ -1,4 +1,9 @@
 <?php
+// DEBUG
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 if (!isset($_SESSION['usuario_id'])) {
     $_SESSION['error'] = "Debes iniciar sesión para continuar.";
@@ -31,6 +36,11 @@ $alias = $_SESSION['usuario_alias'];
             <div class="col-md-3 mb-3">
                 <a href="entities/bodegas/index.php" class="btn btn-primary w-100">Bodegas</a>
             </div>
+        <?php if ($rol === 'admin_bodega' || $rol === 'sysadmin'): ?>
+            <div class="col-md-3 mb-3">
+                <a href="entities/proveedores/index.php" class="btn btn-primary w-100">Proveedores</a>
+            </div>
+        <?php endif; ?>
             <div class="col-md-3 mb-3">
                 <a href="entities/categorias/index.php" class="btn btn-primary w-100">Categorías</a>
             </div>
@@ -39,12 +49,6 @@ $alias = $_SESSION['usuario_alias'];
         <?php if ($rol === 'sysadmin' || $rol === 'admin_bodega' || $rol === 'empleado'): ?>
             <div class="col-md-3 mb-3">
                 <a href="entities/productos/index.php" class="btn btn-primary w-100">Productos</a>
-            </div>
-        <?php endif; ?>
-
-        <?php if ($rol === 'admin_bodega' || $rol === 'sysadmin'): ?>
-            <div class="col-md-3 mb-3">
-                <a href="entities/proveedores/index.php" class="btn btn-primary w-100">Proveedores</a>
             </div>
         <?php endif; ?>
     </div>

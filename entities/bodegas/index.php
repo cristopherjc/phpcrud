@@ -32,8 +32,8 @@ $bodegas = $stmt->fetchAll();
     <a href="../../index.php" class="btn btn-danger mb-4">Dashboard</a>
     <a href="crear.php" class="btn btn-success mb-4">Nueva Bodega</a>
 
-  <table class="table table-bordered table-striped mt-3">
-    <thead class="table-dark">
+  <table class="table table-bordered table-striped">
+    <thead>
       <tr>
         <th>ID</th>
         <th>Código</th>
@@ -50,7 +50,7 @@ $bodegas = $stmt->fetchAll();
         <td><?= htmlspecialchars($bodega['ciudad']) ?></td>
         <td><?= htmlspecialchars($bodega['direccion']) ?></td>
         <td>
-          <a href="editar.php?id=<?= $bodega['id'] ?>" class="btn btn-primary btn-sm">Editar</a>
+          <a href="editar.php?id=<?= $bodega['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
           <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?= $bodega['id'] ?>)">Eliminar</button>
         </td>
       </tr>
