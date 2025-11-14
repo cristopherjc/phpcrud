@@ -28,9 +28,9 @@ $bodegas = $stmt->fetchAll();
 <body class="bg-light">
 <div class="container mt-5">
 
-  <h2>Bodegas 
-    <a href="crear.php" class="btn btn-success float-end">Nueva Bodega</a>
-  </h2>
+  <h2>Bodegas</h2>
+    <a href="../../index.php" class="btn btn-danger mb-4">Dashboard</a>
+    <a href="crear.php" class="btn btn-success mb-4">Nueva Bodega</a>
 
   <table class="table table-bordered table-striped mt-3">
     <thead class="table-dark">

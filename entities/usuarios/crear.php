@@ -76,6 +76,7 @@ $bodegas = $stmt->fetchAll();
         </select>
     </div>
     <button class="btn btn-primary">Guardar</button>
+    <a href="index.php" class="btn btn-secondary">Cancelar</a>
 </form>
 
 <script>

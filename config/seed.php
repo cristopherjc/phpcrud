@@ -119,23 +119,5 @@ foreach ($proveedores as $p) {
 
 echo "Proveedores insertados";
 
-$relaciones = [
-    [2, 1], // usuario bodega_pve con bodega Portovelo
-    [5, 2], // bodega_zrm con Zaruma
-    [3, 1], // empleado1 con Portovelo
-    [4, 1]  // empleado2 con Portovelo
-];
-
-$stmt = $pdo->prepare("
-    INSERT INTO usuarios_bodegas (id_usuario, id_bodega)
-    VALUES (?, ?)
-");
-
-foreach ($relaciones as $r) {
-    $stmt->execute([$r[0], $r[1]]);
-}
-
-echo "Relación usuarios-bodegas insertada ✔<br>";
-
 echo "<br><strong>SEED COMPLETO ✔</strong>";
 ?>

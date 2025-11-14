@@ -34,7 +34,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body class="p-4">
 
 <h2>Usuarios</h2>
-<a href="crear.php" class="btn btn-primary mb-3">Crear Usuario</a>
+<a href="../../index.php" class="btn btn-danger mb-4">Dashboard</a>
+<a href="crear.php" class="btn btn-primary mb-4">Crear Usuario</a>
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -63,7 +64,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </td>
             <td>
                 <a href="editar.php?id=<?= $u['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                <a href="asignar_bodegas.php?id=<?= $u['id'] ?>" class="btn btn-info btn-sm">Bodegas</a>
                 <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?= $u['id'] ?>)">Eliminar</button>
             </td>
         </tr>
