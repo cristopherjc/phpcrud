@@ -2,8 +2,8 @@
 // variables de entorno
 $DB_HOST = 'localhost';
 $DB_NAME = 'crud_db';
-$DB_USER = 'developer';
-$DB_PASS = 'testing';
+$DB_USER = 'root';
+$DB_PASS = '';
 
 try {
   $pdo = new PDO(
