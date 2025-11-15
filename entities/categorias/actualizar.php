@@ -14,8 +14,8 @@ if ($_SESSION['usuario_rol'] != 'sysadmin') {
 }
 
 $id = $_POST['id'];
-$nombre = $_POST['nombre'];
-$descripcion = $_POST['descripcion'];
+$nombre = trim($_POST['nombre'] ?? '');
+$descripcion = trim($_POST['descripcion'] ?? '');
 
 $stmt = $pdo->prepare("UPDATE categorias SET nombre = ?, descripcion = ? WHERE id = ?");
 $stmt->execute([$nombre, $descripcion, $id]);

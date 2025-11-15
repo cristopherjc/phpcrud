@@ -63,7 +63,8 @@ $soloLecturaEmpleado = ($_SESSION['usuario_rol'] === 'empleado');
             <label class="form-label">Descripción</label>
             <textarea name="descripcion"
                       class="form-control"
-                      <?= $soloLecturaEmpleado ? 'readonly' : '' ?>><?= htmlspecialchars($producto['descripcion']) ?></textarea>
+                      <?= $soloLecturaEmpleado ? 'readonly' : '' ?>>
+                      <?= htmlspecialchars($producto['descripcion']) ?></textarea>
         </div>
 
         <div class="mb-3">

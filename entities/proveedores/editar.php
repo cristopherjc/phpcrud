@@ -18,11 +18,6 @@ $stmt = $pdo->prepare("SELECT * FROM proveedores WHERE id = ?");
 $stmt->execute([$id]);
 $proveedor = $stmt->fetch();
 
-if (!$proveedor) {
-    $_SESSION['error'] = "Proveedor no encontrado";
-    header("Location: index.php");
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -39,7 +34,11 @@ if (!$proveedor) {
     <input type="hidden" name="id" value="<?= $proveedor['id'] ?>">
     <div class="mb-3">
       <label>Ruc</label>
-      <input type="text" name="ruc" class="form-control" value="<?= htmlspecialchars($proveedor['ruc']) ?>" required>
+      <input type="text" name="ruc"
+                   class="form-control"
+                   value="<?= $proveedor['ruc'] ?>"
+                   <?= ($proveedor['ruc']) ? 'readonly' : '' ?>
+                   required>
     </div>
     <div class="mb-3">
       <label>Nombre</label>
@@ -58,4 +57,17 @@ if (!$proveedor) {
   </form>
 </div>
 </body>
+
+<?php if (isset($_SESSION['error'])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+  icon: 'error',
+  title: 'Error',
+  text: '<?= addslashes($_SESSION["error"]) ?>',
+  confirmButtonText: 'Entendido'
+});
+</script>
+<?php unset($_SESSION['error']); endif; ?>
+
 </html>

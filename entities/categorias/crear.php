@@ -7,6 +7,9 @@ error_reporting(E_ALL);
 require_once "../../auth/auth.php";
 require_once "../../config/db.php";
 
+$form = $_SESSION['form_data'] ?? [];
+unset($_SESSION['form_data']);
+
 if ($_SESSION['usuario_rol'] !== 'sysadmin') {
     $_SESSION['error'] = "No tienes permiso para crear categorías.";
     header("Location: index.php");
@@ -26,15 +29,29 @@ if ($_SESSION['usuario_rol'] !== 'sysadmin') {
     <form action="guardar.php" method="POST">
         <div class="mb-3">
             <label>Nombre</label>
-            <input type="text" name="nombre" class="form-control" required>
+            <input type="text" name="nombre" class="form-control"
+            value="<?= htmlspecialchars($form['nombre'] ?? '') ?>" required>
         </div>
         <div class="mb-3">
             <label>Descripción</label>
-            <textarea name="descripcion" class="form-control"></textarea>
+            <textarea name="descripcion" class="form-control" value="<?= htmlspecialchars($form['nombre'] ?? '') ?>"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="index.php" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 </body>
+
+<?php if (isset($_SESSION['error'])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+  icon: 'error',
+  title: 'Error',
+  text: '<?= addslashes($_SESSION["error"]) ?>',
+  confirmButtonText: 'Entendido'
+});
+</script>
+<?php unset($_SESSION['error']); endif; ?>
+
 </html>

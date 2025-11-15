@@ -36,11 +36,14 @@ if (!$bodega) {
 <div class="container mt-5">
   <h2>Editar Bodega</h2>
   <form action="actualizar.php" method="POST">
-    <input type="hidden" name="id" value="<?= $bodega['id'] ?>">
+    <input type="hidden" name="id" value="<?= $bodega['cod_bodega'] ?>">
     <div class="mb-3">
       <label>Código</label>
-      <input type="text" name="cod_bodega" class="form-control" value="<?= htmlspecialchars($bodega['cod_bodega']) ?>" required>
-    </div>
+      <input type="text" name="cod_bodega"
+                   class="form-control"
+                   value="<?= $bodega['cod_bodega'] ?>"
+                   <?= ($bodega['cod_bodega']) ? 'readonly' : '' ?>
+                   required>
     <div class="mb-3">
       <label>Ciudad</label>
       <input type="text" name="ciudad" class="form-control" value="<?= htmlspecialchars($bodega['ciudad']) ?>" required>
@@ -54,4 +57,17 @@ if (!$bodega) {
   </form>
 </div>
 </body>
+
+<?php if (isset($_SESSION['error'])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+  icon: 'error',
+  title: 'Error',
+  text: '<?= addslashes($_SESSION["error"]) ?>',
+  confirmButtonText: 'Entendido'
+});
+</script>
+<?php unset($_SESSION['error']); endif; ?>
+
 </html>

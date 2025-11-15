@@ -28,7 +28,7 @@ $precio_compra = floatval($_POST['precio_compra'] ?? 0);
 $precio_venta = floatval($_POST['precio_venta'] ?? 0);
 
 // Bodega
-$id_bodega = intval($_POST['id_bodega'] ?? 0);
+$id_bodega = $_POST['id_bodega'];
 
 // Validación básica
 if (

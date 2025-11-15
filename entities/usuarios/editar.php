@@ -9,7 +9,7 @@ require_once "../../config/db.php";
 
 if ($_SESSION['usuario_rol'] != 'sysadmin') {
     $_SESSION['error'] = "No tienes permisos para acceder a esta página.";
-    header("Location: ../../index.php");
+    header("Location: index.php");
     exit;
 }
 
@@ -93,4 +93,17 @@ document.getElementById("rol").addEventListener("change", function() {
 });
 </script>
 </body>
+
+<?php if (isset($_SESSION['error'])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+  icon: 'error',
+  title: 'Error',
+  text: '<?= addslashes($_SESSION["error"]) ?>',
+  confirmButtonText: 'Entendido'
+});
+</script>
+<?php unset($_SESSION['error']); endif; ?>
+
 </html>

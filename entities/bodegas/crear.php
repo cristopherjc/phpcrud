@@ -5,6 +5,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once "../../auth/auth.php";
+
+$form = $_SESSION['form_data'] ?? [];
+unset($_SESSION['form_data']);
+
 if ($_SESSION['usuario_rol'] != 'sysadmin') {
     $_SESSION['error'] = "No tienes permisos para acceder a esta página.";
     header("Location: ../../index.php");
@@ -25,20 +29,36 @@ if ($_SESSION['usuario_rol'] != 'sysadmin') {
   <form action="guardar.php" method="POST">
     <div class="mb-3">
       <label>Código</label>
-      <input type="text" name="cod_bodega" class="form-control" required>
+      <input type="text" name="cod_bodega" class="form-control"
+      value="<?= htmlspecialchars($form['cod_bodega'] ?? '') ?>" required>
     </div>
     <div class="mb-3">
       <label>Ciudad</label>
-      <input type="text" name="ciudad" class="form-control" required>
+      <input type="text" name="ciudad" class="form-control"
+      value="<?= htmlspecialchars($form['ciudad'] ?? '') ?>" required>
     </div>
     <div class="mb-3">
       <label>Dirección</label>
-      <input type="text" name="direccion" class="form-control" required>
+      <input type="text" name="direccion" class="form-control"
+      value="<?= htmlspecialchars($form['direccion'] ?? '') ?>" required>
     </div>
     <button type="submit" class="btn btn-success">Guardar</button>
     <a href="index.php" class="btn btn-secondary">Cancelar</a>
   </form>
 </div>
 </body>
+
+<?php if (isset($_SESSION['error'])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+  icon: 'error',
+  title: 'Error',
+  text: '<?= addslashes($_SESSION["error"]) ?>',
+  confirmButtonText: 'Entendido'
+});
+</script>
+<?php unset($_SESSION['error']); endif; ?>
+
 </html>
 
