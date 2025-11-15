@@ -36,16 +36,15 @@ $alias = $_SESSION['usuario_alias'];
             <div class="col-md-3 mb-3">
                 <a href="entities/bodegas/index.php" class="btn btn-primary w-100">Bodegas</a>
             </div>
+        <?php endif; ?>
         <?php if ($rol === 'admin_bodega' || $rol === 'sysadmin'): ?>
             <div class="col-md-3 mb-3">
                 <a href="entities/proveedores/index.php" class="btn btn-primary w-100">Proveedores</a>
             </div>
-        <?php endif; ?>
             <div class="col-md-3 mb-3">
                 <a href="entities/categorias/index.php" class="btn btn-primary w-100">Categorías</a>
             </div>
         <?php endif; ?>
-
         <?php if ($rol === 'sysadmin' || $rol === 'admin_bodega' || $rol === 'empleado'): ?>
             <div class="col-md-3 mb-3">
                 <a href="entities/productos/index.php" class="btn btn-primary w-100">Productos</a>

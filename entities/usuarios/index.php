@@ -32,45 +32,45 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <body class="p-4">
+<div class="container">
+    <h2>Usuarios</h2>
+    <a href="../../index.php" class="btn btn-danger mb-4">Dashboard</a>
+    <a href="crear.php" class="btn btn-primary mb-4">Crear Usuario</a>
 
-<h2>Usuarios</h2>
-<a href="../../index.php" class="btn btn-danger mb-4">Dashboard</a>
-<a href="crear.php" class="btn btn-primary mb-4">Crear Usuario</a>
-
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Cédula</th>
-        <th>Alias</th>
-        <th>Nombre</th>
-        <th>Correo</th>
-        <th>Rol</th>
-        <th>Bodega</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($usuarios as $u): ?>
+    <table class="table table-bordered table-striped">
+        <thead>
         <tr>
-            <td><?= $u['id'] ?></td>
-            <td><?= htmlspecialchars($u['cedula']) ?></td>
-            <td><?= htmlspecialchars($u['alias']) ?></td>
-            <td><?= htmlspecialchars($u['nombres'] . " " . $u['apellidos']) ?></td>
-            <td><?= htmlspecialchars($u['correo']) ?></td>
-            <td><?= htmlspecialchars($u['rol']) ?></td>
-            <td>
-                <?= $u['bodega_ciudad'] ? htmlspecialchars($u['bodega_ciudad'] . " (" . $u['cod_bodega'] . ")") : '-' ?>
-            </td>
-            <td>
-                <a href="editar.php?id=<?= $u['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?= $u['id'] ?>)">Eliminar</button>
-            </td>
+            <th>ID</th>
+            <th>Cédula</th>
+            <th>Alias</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Bodega</th>
+            <th>Acciones</th>
         </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+        <?php foreach ($usuarios as $u): ?>
+            <tr>
+                <td><?= $u['id'] ?></td>
+                <td><?= htmlspecialchars($u['cedula']) ?></td>
+                <td><?= htmlspecialchars($u['alias']) ?></td>
+                <td><?= htmlspecialchars($u['nombres'] . " " . $u['apellidos']) ?></td>
+                <td><?= htmlspecialchars($u['correo']) ?></td>
+                <td><?= htmlspecialchars($u['rol']) ?></td>
+                <td>
+                    <?= $u['bodega_ciudad'] ? htmlspecialchars($u['bodega_ciudad'] . " (" . $u['cod_bodega'] . ")") : '-' ?>
+                </td>
+                <td>
+                    <a href="editar.php?id=<?= $u['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?= $u['id'] ?>)">Eliminar</button>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 <script>
 function confirmarEliminar(id) {
   Swal.fire({

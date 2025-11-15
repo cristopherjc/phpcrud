@@ -31,6 +31,8 @@ if (!password_verify($clave, $usuario['clave'])) {
 $_SESSION['usuario_id'] = $usuario['id'];
 $_SESSION['usuario_alias'] = $usuario['alias'];
 $_SESSION['usuario_rol'] = $usuario['rol'];
+//tuve que agregar el id de bodega para gestionar permisos
+$_SESSION['usuario_bodega'] = $usuario['bodega_id'];
 header("Location: ../index.php");
 exit;
 ?>
