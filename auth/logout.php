@@ -2,6 +2,6 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: /phpcrud/auth/login.php");
+header("Location: /phpcrud/index.php");
 exit;
 ?>

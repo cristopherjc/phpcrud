@@ -5,14 +5,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-if (!isset($_SESSION['usuario_id'])) {
-    $_SESSION['error'] = "Debes iniciar sesión para continuar.";
-    header("Location: auth/login.php");
-    exit;
-}
-
-$rol = $_SESSION['usuario_rol'];
-$alias = $_SESSION['usuario_alias'];
+$sesionActiva = isset($_SESSION['usuario_id']);
+$rol = $sesionActiva ? $_SESSION['usuario_rol'] : null;
+$alias = $sesionActiva ? $_SESSION['usuario_alias'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,8 +18,17 @@ $alias = $_SESSION['usuario_alias'];
 </head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <body class="p-4 bg-light">
-
 <div class="container">
+    <?php if (!$sesionActiva): ?>
+    <div class="text-center mt-5">
+        <h2>Bienvenido</h2>
+        <p class="mb-4">Debes iniciar sesión para acceder al panel.</p>
+        <div class="d-flex flex-column align-items-center gap-3 mt-4">
+            <a href="auth/login.php" class="btn btn-primary">Iniciar Sesión</a>
+            <a href="auth/signup.php" class="btn btn-success">Registro Empleado</a>
+        </div>
+    </div>
+    <?php else: ?>
     <h2>Bienvenido, <?= htmlspecialchars($alias) ?> (<?= htmlspecialchars($rol) ?>)</h2>
     <a href="auth/logout.php" class="btn btn-danger mb-4">Cerrar sesión</a>
 
@@ -51,6 +55,7 @@ $alias = $_SESSION['usuario_alias'];
             </div>
         <?php endif; ?>
     </div>
+    <?php endif; ?>
 </div>
 
 </body>
