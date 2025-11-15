@@ -1,9 +1,10 @@
 <?php
-// variables de entorno
-$DB_HOST = 'localhost';
-$DB_NAME = 'crud_db';
-$DB_USER = 'developer';
-$DB_PASS = 'testing';
+
+// Leer variables desde Railway (Environment Variables)
+$DB_HOST = getenv('DB_HOST');
+$DB_NAME = getenv('DB_NAME');
+$DB_USER = getenv('DB_USER');
+$DB_PASS = getenv('DB_PASS');
 
 try {
   $pdo = new PDO(
@@ -17,6 +18,5 @@ try {
     ]
   );
 } catch (PDOException $e) {
-  die('Error de conexion: '.$e->getMessage());
+  die("Error de conexión: " . $e->getMessage());
 }
-?>
