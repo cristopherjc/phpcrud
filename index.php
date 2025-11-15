@@ -5,14 +5,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-if (!isset($_SESSION['usuario_id'])) {
-    $_SESSION['error'] = "Debes iniciar sesión para continuar.";
-    header("Location: auth/login.php");
-    exit;
-}
-
-$rol = $_SESSION['usuario_rol'];
-$alias = $_SESSION['usuario_alias'];
+$sesionActiva = isset($_SESSION['usuario_id']);
+$rol = $sesionActiva ? $_SESSION['usuario_rol'] : null;
+$alias = $sesionActiva ? $_SESSION['usuario_alias'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -25,6 +20,16 @@ $alias = $_SESSION['usuario_alias'];
 <body class="p-4 bg-light">
 
 <div class="container">
+    <!-- para deploy -->
+    <?php if (!$sesionActiva): ?>
+
+    <div class="text-center mt-5">
+        <h2>Bienvenido</h2>
+        <p class="mb-4">Debes iniciar sesión para acceder al panel.</p>
+        <a href="auth/login.php" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+    </div>
+
+    <?php else: ?>
     <h2>Bienvenido, <?= htmlspecialchars($alias) ?> (<?= htmlspecialchars($rol) ?>)</h2>
     <a href="auth/logout.php" class="btn btn-danger mb-4">Cerrar sesión</a>
 
@@ -51,6 +56,7 @@ $alias = $_SESSION['usuario_alias'];
             </div>
         <?php endif; ?>
     </div>
+    <?php endif; ?>
 </div>
 
 </body>
