@@ -46,8 +46,10 @@ if (isset($_SESSION['idUsuario'])) {
                             <label>Clave</label>
                             <input type="password" name="clave" class="form-control" required>
                         </div>
-
-                        <button class="btn btn-primary w-100">Ingresar</button>
+                        <div class="d-flex flex-column align-items-center gap-3 mt-4">
+                          <button class="btn btn-primary w-100">Ingresar</button>
+                          <a href="../index.php" class="btn btn-secondary w-100">Volver</a>
+                        </div>
                     </form>
                 </div>
             </div>

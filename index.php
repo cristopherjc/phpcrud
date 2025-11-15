@@ -56,6 +56,19 @@ $alias = $sesionActiva ? $_SESSION['usuario_alias'] : null;
         <?php endif; ?>
     </div>
     <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+Swal.fire({
+  icon: 'error',
+  title: 'Error',
+  text: '<?= addslashes($_SESSION["error"]) ?>',
+  confirmButtonText: 'Entendido'
+});
+</script>
+<?php unset($_SESSION['error']); endif; ?>
+
 </div>
 
 </body>

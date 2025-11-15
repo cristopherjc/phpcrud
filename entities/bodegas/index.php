@@ -10,7 +10,7 @@ require_once "../../config/db.php";
 // Solo sysadmin
 if ($_SESSION['usuario_rol'] != 'sysadmin') {
     $_SESSION['error'] = "No tienes permisos para acceder a esta página.";
-    header("Location: ../../auth/login.php");
+    header("Location: ../../index.php");
     exit;
 }
 

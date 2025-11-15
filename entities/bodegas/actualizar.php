@@ -11,7 +11,7 @@ $errors = [];
 
 if ($_SESSION['usuario_rol'] != 'sysadmin') {
     $_SESSION['error'] = "No tienes permisos para esta acción.";
-    header("Location: ./index.php");
+    header("Location: index.php");
     exit;
 }
 

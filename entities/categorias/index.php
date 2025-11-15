@@ -8,6 +8,11 @@ require_once "../../auth/auth.php";
 require_once "../../config/db.php";
 
 // solo sysadmin
+if ($_SESSION['usuario_rol'] != 'sysadmin') {
+    $_SESSION['error'] = "No tienes permisos para acceder a esta página.";
+    header("Location: ../../index.php");
+    exit;
+}
 $isSysAdmin = $_SESSION['usuario_rol'] === 'sysadmin';
 
 // Traer todas las categorías

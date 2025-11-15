@@ -41,7 +41,7 @@ if (empty($bodega_id)) {
 if (!empty($errors)) {
     $_SESSION['form_data'] = $_POST;
     $_SESSION['error'] = $errors[0];
-    header("Location: registro.php");
+    header("Location: signup.php");
     exit;
 }
 
@@ -51,7 +51,7 @@ $stmt->execute([$cedula]);
 if ($stmt->fetchColumn() > 0) {
     $_SESSION['form_data'] = $_POST;
     $_SESSION['error'] = "La cédula ya está registrada.";
-    header("Location: registro.php");
+    header("Location: signup.php");
     exit;
 }
 
