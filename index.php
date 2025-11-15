@@ -3,6 +3,10 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+if (!in_array('mysql', PDO::getAvailableDrivers())) {
+    die("Error: PDO MySQL driver no disponible");
+}
+
 
 session_start();
 $sesionActiva = isset($_SESSION['usuario_id']);
