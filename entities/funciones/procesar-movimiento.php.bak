@@ -1,0 +1,50 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+header('Content-Type: application/json');
+
+session_start();
+require '../../config/db.php'; // define $pdo
+require __DIR__ . '/registrar-movimientos.php';
+
+// Leer POST de forma segura
+$id_producto = $_POST['id_producto'] ?? null;
+$tipo        = $_POST['tipo'] ?? null;
+$cantidad    = $_POST['cantidad'] ?? null;
+$comentario  = $_POST['comentario'] ?? '';
+$id_usuario  = $_SESSION['usuario_id'] ?? null;
+$id_bodega   = $_SESSION['usuario_bodega'] ?? 1;
+
+if (!$id_producto || !$tipo || !$cantidad || !$id_usuario) {
+    echo json_encode(['success'=>false, 'message'=>'Faltan datos obligatorios']);
+    exit;
+}
+
+try {
+    // Registrar movimiento
+    registrarMovimiento($pdo, $id_producto, $id_usuario, $id_bodega, $tipo, $cantidad, $comentario);
+
+    // Actualizar stock
+    if($tipo === 'entrada'){
+        $sql = "UPDATE productos_bodega 
+                SET stock = stock + :cantidad 
+                WHERE id_producto = :id_producto AND id_bodega = :id_bodega";
+    } else {
+        $sql = "UPDATE productos_bodega 
+                SET stock = stock - :cantidad 
+                WHERE id_producto = :id_producto AND id_bodega = :id_bodega";
+    }
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':cantidad' => $cantidad,
+        ':id_producto' => $id_producto,
+        ':id_bodega' => $id_bodega
+    ]);
+
+    echo json_encode(['success'=>true]);
+
+} catch (Exception $e){
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+}
+?>

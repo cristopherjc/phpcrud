@@ -1,7 +1,5 @@
 <?php
 // DEBUG
-phpinfo();
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -32,7 +30,12 @@ $alias = $sesionActiva ? $_SESSION['usuario_alias'] : null;
     <div class="text-center mt-5">
         <h2>Bienvenido</h2>
         <p class="mb-4">Debes iniciar sesión para acceder al panel.</p>
-        <a href="auth/login.php" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+
+        <div class="d-flex flex-column align-items-center gap-3 mt-4">
+            <a href="auth/login.php" class="btn btn-primary">Iniciar Sesión</a>
+            <!--<a href="auth/signup.php" class="btn btn-success">Registro Empleado</a>-->
+        </div>
+
     </div>
 
     <?php else: ?>

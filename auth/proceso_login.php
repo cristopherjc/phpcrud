@@ -17,7 +17,7 @@ $stmp->execute([$cedula]);
 $usuario = $stmp->fetch();
 
 if (!$usuario) {
-  $_SESSION['error'] = "Usuario no econtrado";
+  $_SESSION['error'] = "Usuario no encontrado";
   header("Location: login.php");
   exit;
 }

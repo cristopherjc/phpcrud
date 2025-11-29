@@ -1,4 +1,16 @@
+
+use crud_db;
+
 -- Script para la creación de la base de datos del sistema
+CREATE TABLE bodegas (
+	id int AUTO_INCREMENT PRIMARY KEY,
+    cod_bodega varchar(10) NOT NULL UNIQUE,
+    ciudad varchar(100) NOT NULL,
+    direccion varchar(100) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=INNODB;
+
 CREATE TABLE usuarios (
     id int AUTO_INCREMENT PRIMARY KEY,
     cedula varchar(10) NOT NULL UNIQUE,
@@ -12,15 +24,6 @@ CREATE TABLE usuarios (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (bodega_id) REFERENCES bodegas(id) ON DELETE SET NULL
-) ENGINE=INNODB;
-
-CREATE TABLE bodegas (
-	id int AUTO_INCREMENT PRIMARY KEY,
-    cod_bodega varchar(10) NOT NULL UNIQUE,
-    ciudad varchar(100) NOT NULL,
-    direccion varchar(100) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB;
 
 CREATE TABLE proveedores (
