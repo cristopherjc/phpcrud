@@ -1,11 +1,11 @@
 <?php
 
 // Si no usas php dotenv, getenv() funciona igual
-$host = getenv('DB_HOST');
-$port = getenv('DB_PORT');
-$db   = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASSWORD');
+$host = "localhost";
+$port = "3306";
+$db   = "crud_db";
+$user = "root";
+$pass = "";
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8", $user, $pass);
