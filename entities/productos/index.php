@@ -83,7 +83,7 @@ $bodegas = $pdo->query("SELECT id, ciudad FROM bodegas ORDER BY ciudad")->fetchA
             <td>$<?= $p['precio_venta'] ?></td>
             <td><?= $p['stock'] ?></td>
             <td>
-                <button class="btn btn-warning btn-sm" 
+                <button class="btn btn-success btn-sm" 
                     onclick="prepararModal(<?= $p['id'] ?>, '<?= $p['nombre'] ?>', <?= $p['stock'] ?>)">
                     Registrar Movimiento
                 </button>
@@ -120,6 +120,17 @@ $bodegas = $pdo->query("SELECT id, ciudad FROM bodegas ORDER BY ciudad")->fetchA
             </select>
           </div>
 
+            <?php if($rol === 'sysadmin'): ?>
+            <div class="mb-3" id="bodegaOrigenContainer" style="display:none;">
+                <label for="bodega_origen">Bodega origen:</label>
+                <select name="bodega_origen" id="bodega_origen" class="form-select">
+                    <?php foreach($bodegas as $b): ?>
+                        <option value="<?= $b['id'] ?>"><?= $b['ciudad'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <?php endif; ?>
+
           <div class="mb-3" id="bodegaDestinoContainer" style="display:none;">
             <label for="bodega_destino">Bodega destino:</label>
             <select name="bodega_destino" id="bodega_destino" class="form-select">
@@ -151,6 +162,7 @@ $bodegas = $pdo->query("SELECT id, ciudad FROM bodegas ORDER BY ciudad")->fetchA
 <script>
 // Mostrar/ocultar bodega destino
 document.getElementById('tipo').addEventListener('change', function() {
+    document.getElementById('bodegaOrigenContainer').style.display = (this.value==='traspaso') ? 'block' : 'none';
     document.getElementById('bodegaDestinoContainer').style.display = (this.value==='traspaso') ? 'block' : 'none';
 });
 

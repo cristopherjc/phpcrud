@@ -34,27 +34,27 @@ if (isset($_SESSION['id_usuario'])) {
                     <?php unset($_SESSION['error']); ?>
                     <?php endif; ?>
 
-
-
                     <form action="proceso_login.php" method="POST">
                         <div class="mb-3">
-                            <label>Identificación</label>
-                            <input type="text" name="cedula" class="form-control" required>
+                            <label>Alias</label>
+                            <input type="text" name="alias" class="form-control" required>
                         </div>
 
                         <div class="mb-3">
                             <label>Clave</label>
                             <input type="password" name="clave" class="form-control" required>
                         </div>
-
                         <button class="btn btn-primary w-100">Ingresar</button>
                     </form>
+
+                </div>
+                <div class="text-center mb-3 mt-3">
+                      <a href="../index.php" class="btn btn-danger w-50">Cancelar</a>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
-  </body>
+</body>
 </html>

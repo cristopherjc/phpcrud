@@ -9,11 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   header("Location: login.php");
   exit;
 }
-$cedula = $_POST['cedula'];
+$alias = $_POST['alias'];
 $clave = $_POST['clave'];
 
-$stmp = $pdo->prepare("SELECT * FROM usuarios WHERE cedula = ?");
-$stmp->execute([$cedula]);
+$stmp = $pdo->prepare("SELECT * FROM usuarios WHERE alias = ?");
+$stmp->execute([$alias]);
 $usuario = $stmp->fetch();
 
 if (!$usuario) {
@@ -33,6 +33,8 @@ $_SESSION['usuario_alias'] = $usuario['alias'];
 $_SESSION['usuario_rol'] = $usuario['rol'];
 //tuve que agregar el id de bodega para gestionar permisos
 $_SESSION['usuario_bodega'] = $usuario['bodega_id'];
+$_SESSION['usuario_nombres'] = $usuario['nombres'];
+$_SESSION['usuario_apellidos'] = $usuario['apellidos'];
 header("Location: ../index.php");
 exit;
 ?>

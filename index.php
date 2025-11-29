@@ -12,6 +12,12 @@ session_start();
 $sesionActiva = isset($_SESSION['usuario_id']);
 $rol = $sesionActiva ? $_SESSION['usuario_rol'] : null;
 $alias = $sesionActiva ? $_SESSION['usuario_alias'] : null;
+$nombres = $sesionActiva ? $_SESSION['usuario_nombres'] : null;
+$apellidos = $sesionActiva ? $_SESSION['usuario_apellidos'] : null;
+
+$nombres = explode(' ', $nombres)[0];
+$apellidos = explode(' ', $apellidos)[0];
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,15 +38,15 @@ $alias = $sesionActiva ? $_SESSION['usuario_alias'] : null;
         <p class="mb-4">Debes iniciar sesión para acceder al panel.</p>
 
         <div class="d-flex flex-column align-items-center gap-3 mt-4">
-            <a href="auth/login.php" class="btn btn-primary">Iniciar Sesión</a>
+            <a href="/auth/login.php" class="btn btn-primary">Iniciar Sesión</a>
             <!--<a href="auth/signup.php" class="btn btn-success">Registro Empleado</a>-->
         </div>
 
     </div>
 
     <?php else: ?>
-    <h2>Bienvenido, <?= htmlspecialchars($alias) ?> (<?= htmlspecialchars($rol) ?>)</h2>
-    <a href="auth/logout.php" class="btn btn-danger mb-4">Cerrar sesión</a>
+    <h2>Bienvenido, <?= htmlspecialchars($nombres) ?> <?= htmlspecialchars($apellidos) ?> (<?= htmlspecialchars($rol) ?>)</h2>
+    <a href="/auth/logout.php" class="btn btn-danger mb-4">Cerrar sesión</a>
 
     <div class="row">
         <?php if ($rol === 'sysadmin'): ?>

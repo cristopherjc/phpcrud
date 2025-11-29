@@ -18,6 +18,20 @@ $id_usuario         = $_SESSION['usuario_id'] ?? null;
 $id_bodega          = $_SESSION['usuario_bodega'] ?? null;
 $id_bodega_destino  = $_POST['bodega_destino'] ?? null;
 
+// Detectar bodega origen
+if ($rol === 'sysadmin') {
+    $id_bodega = $_POST['bodega_origen'] ?? null; // Sysadmin selecciona origen
+    if (!$id_bodega) {
+        echo json_encode(['success'=>false,'message'=>'Sysadmin debe seleccionar bodega origen']);
+        exit;
+    }
+} else {
+    $id_bodega = $_SESSION['usuario_bodega'] ?? null;
+    if (!$id_bodega) {
+        echo json_encode(['success'=>false,'message'=>'No tienes una bodega asignada']);
+        exit;
+    }
+}
 
 if(!$id_producto || !$tipo || !$cantidad || !$id_usuario){
     echo json_encode(['success'=>false,'message'=>'Faltan datos obligatorios']);
@@ -55,14 +69,31 @@ try {
         // Si no existe, crear nuevo producto
         $sql = "INSERT INTO productos (id_bodega, id_proveedor, id_categoria, nombre, descripcion, precio_compra, precio_venta, stock, stock_minimo, created_at, updated_at)
                 SELECT :id_bodega_destino, id_proveedor, id_categoria, nombre, descripcion, precio_compra, precio_venta, :cantidad, stock_minimo, NOW(), NOW()
-                FROM productos WHERE id=:id_producto";
+                FROM productos WHERE id=:id";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([':id_bodega_destino'=>$id_bodega_destino, ':cantidad'=>$cantidad, ':id_producto'=>$id_producto]);
+        $stmt->execute([':id_bodega_destino'=>$id_bodega_destino, ':cantidad'=>$cantidad, ':id'=>$id_producto]);
         $new_id = $pdo->lastInsertId();
     }
 
     // Registrar entrada en destino
     registrarMovimiento($pdo, $new_id, $id_usuario, $id_bodega_destino, 'entrada', $cantidad, "Traspaso desde bodega $id_bodega");
+    } elseif ($tipo === 'entrada') {
+        // SUMAR stock en bodega
+        $sql = "UPDATE productos SET stock = stock + :cantidad WHERE id=:id AND id_bodega=:id_bodega";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':cantidad'=>$cantidad, ':id'=>$id_producto, ':id_bodega'=>$id_bodega]);
+
+        // Registrar entrada
+        registrarMovimiento($pdo, $id_producto, $id_usuario, $id_bodega, 'entrada', $cantidad, $comentario);
+
+    } elseif ($tipo === 'salida') {
+        // RESTAR stock en bodega
+        $sql = "UPDATE productos SET stock = stock - :cantidad WHERE id=:id AND id_bodega=:id_bodega";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':cantidad'=>$cantidad, ':id'=>$id_producto, ':id_bodega'=>$id_bodega]);
+
+        // Registrar salida
+        registrarMovimiento($pdo, $id_producto, $id_usuario, $id_bodega, 'salida', $cantidad, $comentario);
     }
 
 
