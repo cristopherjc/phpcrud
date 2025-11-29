@@ -1,7 +1,7 @@
 <?php
 // variables de entorno
 $DB_HOST = 'localhost';
-$DB_NAME = 'crud_db';
+$DB_NAME = 'railway';
 $DB_USER = 'root';
 $DB_PASS = '';
 
