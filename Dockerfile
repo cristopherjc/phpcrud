@@ -14,7 +14,8 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 
 # 6. Puerto que escucha Apache
-EXPOSE 80
+ENV PORT 8080
+EXPOSE 8080
 
 # 7. Comando por defecto
 CMD ["apache2-foreground"]
